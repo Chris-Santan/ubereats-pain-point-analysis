@@ -52,9 +52,9 @@ Standard NLP preprocessing was applied (`src/preprocess.py`) including:
 
 This stage was designed to reduce noise without damaging semantic meaning for transformer-based embeddings.
 
-### Topic Modeling with BERTopic
+### Topic Modeling with BERTopic - First Pass
 
-BERTopic (`src/bertopic_model.py`) was used as the primary tool to extract coherent topic clusters from the filtered dataset. The pipeline produced:
+BERTopic (`src/bertopic_model.py`) was used as the primary tool to extract coherent topic clusters from the filtered dataset of approximately 38,120 negative reviews. The pipeline produced:
 
 - Sentence Transformers based embeddings (using `all-MiniLM-L6-v2`)
 - HDBSCAN clustering
@@ -77,15 +77,40 @@ Human-readable labels were assigned to topics (`src/label_topics.py`) based on t
 
 ## Topic Modeling & Clustering
 
-### Subtopic Discovery
+### Topic Selection for Deep Analysis
 
-To further resolve granular complaints, additional clustering was performed inside major topics (`src/deep_analysis/deep_subtopic_clustering.py`). For example, the promotion-related topic was decomposed into subtopics such as unusable promo codes, expiring promotions, fake discounts, and eligibility errors.
+From the dozens of topics identified in the first BERTopic pass, three major pain point categories were selected for deeper investigation:
 
-The subtopic clustering process:
-- Applied BERTopic iteratively to each major topic
+- **Topic 2**: Promo, promotion and promos related issues (1,389 reviews)
+- **Topic 7**: Tip, tips and tipping related issues (326 reviews)
+- **Topic 24**: Gift, gift card and card related issues (115 reviews)
+
+These topics were chosen based on their prevalence and business impact, representing significant user pain points that warranted granular analysis.
+
+### Subtopic Discovery - Second BERTopic Pass
+
+To further resolve granular complaints, a second BERTopic pass was applied to each of the three selected topics (`src/deep_analysis/deep_subtopic_clustering.py`). This hierarchical approach allowed for finer-grained analysis within each major topic.
+
+The second-pass clustering process:
+- Applied BERTopic iteratively to each of the three major topics separately
 - Used smaller minimum topic size (8 reviews) to find finer-grained subtopics
 - Generated human-readable subtopic labels based on top representative words
 - Saved subtopic assignments and labels for each review
+
+**Results of Second Pass:**
+- **Topic 2** (1,389 reviews) was decomposed into multiple subtopics, with the largest being "codes, code and promo codes related issues" (155 reviews)
+- **Topic 7** (326 reviews) was decomposed into subtopics including "app, tip and order related issues" (70 reviews)
+- **Topic 24** (115 reviews) was decomposed into subtopics, with the largest being "gift, card and gift card related issues" (110 reviews)
+
+### Final Subtopic Selection
+
+From each of the three topics, one specific subtopic was selected for detailed manual analysis:
+
+- **Topic 2**: "codes, code and promo codes related issues" (155 reviews) - representing the most common complaint pattern within promotion issues
+- **Topic 7**: "app, tip and order related issues" (70 reviews) - focusing on technical and transactional tip problems
+- **Topic 24**: "gift, card and gift card related issues" (110 reviews) - covering the primary gift card usability problems
+
+These three subtopics underwent comprehensive manual review and categorization, resulting in the detailed analysis reports presented in the Deep Analysis Results section.
 
 ### Human in the Loop Validation
 
@@ -101,11 +126,21 @@ This hybrid method aligns unsupervised ML with practical business insights.
 
 ## Deep Analysis Results
 
-Three major pain point categories were selected for deep analysis: Topic 2 (Promotions), Topic 7 (Tipping), and Topic 24 (Gift Cards). Each topic underwent detailed subtopic clustering and manual analysis.
+This section presents the detailed analysis of three specific subtopics selected from the hierarchical BERTopic workflow:
 
-### Topic 2: Promo, Promotion and Promos Related Issues
+1. **Initial BERTopic pass** on ~38,120 reviews identified dozens of topics
+2. **Three topics selected** for deeper analysis (Topics 2, 7, and 24)
+3. **Second BERTopic pass** applied to each selected topic to identify subtopics
+4. **One subtopic from each topic** selected for comprehensive manual analysis
 
-**Total Reviews Analyzed:** 155 reviews
+The following reports detail the findings from each selected subtopic.
+
+### Topic 2: Codes, Code and Promo Codes Related Issues
+
+**Source:** Selected from Topic 2 (Promo, Promotion and Promos Related Issues)  
+**Parent Topic Size:** 1,389 reviews  
+**Selected Subtopic Size:** 155 reviews  
+**Analysis Focus:** Detailed breakdown of promo code reliability and usability issues
 
 **Key Findings:**
 
@@ -148,11 +183,14 @@ Three major pain point categories were selected for deep analysis: Topic 2 (Prom
 
 **Monthly Trend Visualization:** `visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png`
 
-This visualization shows how promotion-related complaints have evolved over time, revealing patterns in when users experience the most issues with promo codes.
+This visualization shows how the parent topic (Topic 2: Promo, Promotion and Promos Related Issues) has evolved over time, tracking all 1,389 reviews in the topic. This reveals patterns in when users experience the most issues with promotions overall.
 
-### Topic 7: Tip, Tips and Tipping Related Issues
+### Topic 7: App, Tip and Order Related Issues
 
-**Total Reviews Analyzed:** 70 reviews
+**Source:** Selected from Topic 7 (Tip, Tips and Tipping Related Issues)  
+**Parent Topic Size:** 326 reviews  
+**Selected Subtopic Size:** 70 reviews  
+**Analysis Focus:** Technical and transactional issues with tipping functionality
 
 **Key Findings:**
 
@@ -198,11 +236,14 @@ This visualization shows how promotion-related complaints have evolved over time
 
 **Monthly Trend Visualization:** `visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png`
 
-This visualization tracks tipping-related complaints over time, showing when users experience the most issues with tip charges and tip functionality.
+This visualization tracks the parent topic (Topic 7: Tip, Tips and Tipping Related Issues) over time, showing all 326 reviews in the topic. This reveals patterns in when users experience the most issues with tipping overall.
 
-### Topic 24: Gift, Gift Card and Card Related Issues
+### Topic 24: Gift, Card and Gift Card Related Issues
 
-**Total Reviews Analyzed:** 110 reviews
+**Source:** Selected from Topic 24 (Gift, Gift Card and Card Related Issues)  
+**Parent Topic Size:** 115 reviews  
+**Selected Subtopic Size:** 110 reviews  
+**Analysis Focus:** Gift card usability, redemption, and payment issues
 
 **Key Findings:**
 
@@ -259,7 +300,7 @@ This visualization tracks tipping-related complaints over time, showing when use
 
 **Monthly Trend Visualization:** `visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png`
 
-This visualization shows how gift card-related complaints have changed over time, revealing patterns in when users experience the most issues with gift card functionality.
+This visualization shows how the parent topic (Topic 24: Gift, Gift Card and Card Related Issues) has changed over time, tracking all 115 reviews in the topic. This reveals patterns in when users experience the most issues with gift cards overall.
 
 ---
 
@@ -275,13 +316,13 @@ The project generates several types of visual outputs:
 
 ### Deep Analysis Visualizations
 
-Monthly trend visualizations for each of the three deeply analyzed topics:
+Monthly trend visualizations for each of the three parent topics selected for deep analysis:
 
-- **Topic 2 - Promotions**: `visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png`
-- **Topic 7 - Tipping**: `visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png`
-- **Topic 24 - Gift Cards**: `visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png`
+- **Topic 2 - Promotions** (1,389 reviews): `visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png`
+- **Topic 7 - Tipping** (326 reviews): `visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png`
+- **Topic 24 - Gift Cards** (115 reviews): `visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png`
 
-These visualizations show how each subtopic's prevalence has changed over time, allowing identification of:
+These visualizations show how each parent topic's prevalence has changed over time, tracking all reviews within each topic (not just the selected subtopics). This allows identification of:
 - Seasonal patterns in complaints
 - Impact of app updates or policy changes
 - Trends that may indicate systemic issues
