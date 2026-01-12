@@ -1,170 +1,155 @@
-Uber Eats Pain Point Analysis
-Overview
+Uber Eats Pain-Point Analysis
+Project Overview
 
-This project analyzes user pain points in Uber Eats by extracting, cleaning, modeling, and evaluating large-scale consumer reviews from the Google Play Store. Over eighty thousand English reviews were scraped and processed to isolate negative experiences with a focus on product, pricing, promotions, and operational failures. Natural language processing, topic modeling, clustering, and manual qualitative review were used together to surface patterns that reflect real user frustrations. The outcome is a structured understanding of the most common UX and business pain points, supported by both quantitative and qualitative evidence.
+This project performs large scale analysis of English language Uber Eats reviews sourced from the Google Play Store. The goal was to identify recurring negative user pain points at scale, reduce them into meaningful categories, and produce actionable summaries using modern NLP tooling. The dataset contained roughly 80000 reviews after scraping, reduced to 38120 eligible negative reviews after filtering for sentiment and length. All analysis was done locally using reproducible Python scripts. The final outcome is a structured breakdown of major complaint categories supported by topic modeling, clustering, visualization, and human validation.
 
-Objectives
+Data Collection & Filtering
+Scraping Review Data
 
-The project was built around three core goals.
-First, identify the major categories of user frustration without pre-defining labels.
-Second, isolate and analyze fine-grained subtopics within these categories.
-Third, interpret findings through the lens of practical product recommendations rather than abstract sentiment labels.
+Reviews were scraped using a custom scraper which collected approximately 80000 Uber Eats reviews from the Google Play Store. Only English language reviews were collected because they are the most consistent for downstream embedding models and because sentiment heuristics tend to perform better.
 
-Data Collection
+Filtering Criteria
 
-A custom scraping script (scraper.py) was built to collect approximately 80,000 Uber Eats Google Play Store reviews. The scraper extracted review text, rating, date, and metadata fields. Only English-language content was retained for downstream modeling in this project.
+A cleaning script removed neutral or positive reviews and filtered for meaningful content. Filters applied:
 
-Data Filtering and Cleaning
+Rating less than 4 stars
 
-After scraping, the data passed through several processing stages using clean_data.py and preprocess.py.
+Minimum length 7 words
 
-Filtering decisions included:
+English text only
+After filtering, the dataset contained roughly 38120 eligible negative reviews suitable for NLP analysis. This approach ensured that downstream topic extraction would focus on user complaints rather than general praise or noise.
 
-Removing reviews with ratings above three stars in order to isolate negative feedback.
+NLP Processing Pipeline
+Text Preprocessing
 
-Removing short reviews under seven words to reduce noise and non-informative content.
+Standard NLP preprocessing was applied including lowercasing, punctuation removal, stopword removal, and normalization of whitespace. This stage was designed to reduce noise without damaging semantic meaning for transformer based embeddings.
 
-Standardizing whitespace, punctuation, and casing.
+Topic Modeling with BERTopic
 
-Removing URLs, emails, and vendor-specific formatting artifacts.
+BERTopic was used as the primary tool to extract coherent topic clusters from the filtered dataset. The pipeline produced:
 
-After filtering, roughly 38,120 reviews remained from the initial 80,000.
+Sentence Transformers based embeddings
 
-Embeddings and Topic Modeling
+HDBSCAN clustering
 
-The core modeling pipeline used BERTopic to discover latent high-level themes from user text. The bertopic.py module applied the following steps:
+UMAP dimensionality reduction
 
-Transformed cleaned text into dense sentence embeddings using a transformer-based language model.
+Topic labeling based on word frequency and TF-IDF
+The initial BERTopic pass produced dozens of interpretable topics including complaints about promotions, fees, restaurant issues, account issues, refunds, and delivery problems.
 
-Reduced embedding dimensionality for clustering.
+Subtopic Discovery
 
-Assigned reviews to topics.
+To further resolve granular complaints, additional clustering was performed inside major topics. For example, the promotion related topic was decomposed into subtopics such as unusable promo codes, expiring promotions, fake discounts, and eligibility errors. Subtopic work was done through both BERTopic iterative clustering and alternative embedding based clustering tools.
 
-Generated topic labels using representation models.
+Visualization
+Graphical Outputs
 
-This produced a set of distinct high-level topics representing major user complaints such as:
+The project generated several visual diagnostic outputs including:
 
-Promotional code failures.
+Topic frequency bar charts
 
-Delivery fees and tipping frustrations.
+Embedding clusters via UMAP
 
-Gift card and credit errors.
+Distribution charts
 
-Customer service failures.
+Temporal patterns where relevant
+These allowed quick validation of topic coherence and density.
 
-Order fulfillment problems.
+KMeans Alternative Clustering
 
-Subtopic Discovery and Deep Analysis
+For topics where BERTopic treated many items as outliers due to HDBSCAN parameters, KMeans was used as an alternative. KMeans avoided outlier discarding, preserved semantic grouping, and allowed fixed K selection for clearer cluster labeling inside topics. This was especially useful for granular promotional complaints.
 
-High-level topics alone do not capture the full structure of user complaints. To address this, the project introduced a second analysis stage targeting specific topics for fine-grained clustering.
+Human in the Loop Validation
 
-Two methods were added:
+After clustering, representative samples from selected subtopics were reviewed manually to ensure semantic correctness. Human validation helped interpret raw cluster labels into meaningful business level pain points. Examples of validated interpretations include:
 
-BERTopic on-topic subclustering for hierarchical themes.
+Unauthorized or incorrect tip charges
 
-KMeans clustering on sentence embeddings for partitioning without outliers.
+Promotion codes being expired or invalid
 
-These produced CSV outputs for each selected topic that contained subtopic labels and corresponding reviews. For example, the promotional code topic yielded clusters separating issues such as:
+Account suspensions tied to gift card redemptions
+This hybrid method aligns unsupervised ML with practical business insights.
 
-Codes advertised but not honored.
+Final Output Format
 
-Eligibility or “account not eligible” errors.
+The final structured analysis produces:
 
-Code disappears at checkout.
+A set of major pain point categories
 
-Expiration or deactivation complaints.
+Subtopics nested under those categories
 
-Referral codes not applying.
+Representative review excerpts for grounding
 
-False advertising accusations.
+Optional statistical summaries
+The final deliverable supports product planning, UX evaluation, and customer experience strategy.
 
-The KMeans method assigned every review to a subcluster with no dropped outliers, which provided a more complete representation for product-oriented interpretation.
+Technical Stack
 
-Manual Qualitative Layer
+Python
 
-After computational modeling, selected subtopics underwent manual qualitative review. This step was essential because models alone cannot determine which issues matter most to users or businesses. Manual review focused on:
+BeautifulSoup / scraping utilities
 
-Extracting the core failure mechanism in user terms.
+Sentence Transformers
 
-Identifying user expectations versus actual outcomes.
+BERTopic
 
-Extracting indicators of financial risk, support breakdown, or policy confusion.
+HDBSCAN
 
-Distinguishing authentic product failures from eligibility or policy misunderstandings.
+UMAP
 
-An example subtopic, “codes, code and promo codes related issues”, contained 155 reviews describing scenarios such as codes disappearing at checkout, being deactivated before stated expiry, or being flagged as already used. The qualitative analysis revealed that many complaints described situations perceived as financial baiting or false advertising rather than minor technical bugs. That distinction is only visible through human interpretation.
+Scikit Learn
 
-Key Findings
+Pandas / NumPy
 
-Quantitative modeling and manual review together surfaced several concrete patterns.
+Matplotlib / Seaborn
 
-Promotional codes:
-Users frequently reported receiving codes by email, push, or mail that failed at checkout, disappeared upon order confirmation, or returned account eligibility errors despite satisfying requirements. Many users interpreted this as false advertising, baiting, or intentional withdrawal of promotions. Support channels compounded frustration by stating that promo deactivation is permitted at any time, which undermined trust.
-
-Fees and tipping:
-Review clusters revealed a mix of sticker shock at total cost, frustration with hidden or unexpected fees, and confusion about tipping defaults. Several users did not mind the product itself but rejected the business model of stacking fees.
-
-Gift cards:
-Gift card users experienced redemption failures, state mismatch issues, or confusing flows that prevented use and left credit stranded.
-
-Customer support:
-Many reviews described an inability to resolve issues because live support was missing, slow, or unhelpful. In several cases, this transformed minor technical failures into major emotional complaints.
-
-These patterns suggest that a large share of user dissatisfaction stems not from order logistics alone but from price transparency, promotional integrity, billing confidence, and support responsiveness.
+All analysis was performed locally, and large model artifacts were excluded from Git to meet GitHub file size constraints.
 
 Repository Structure
-
-The repository is organized to reflect the full processing workflow.
-
-/data/                 (not included in repo due to size and privacy)
-    raw/               (scraped output)
-    processed/         (cleaned and filtered reviews)
-    embeddings/        (vectorized document embeddings)
-    deep_analysis/     (subtopics and clustering outputs)
-
-/models/               (local LLM and BERTopic objects, excluded from GitHub)
-
-/scripts/
-    scraper.py
-    clean_data.py
-    preprocess.py
-    bertopic.py
-    kmeans_subtopics.py
-    label_topics.py
-    analyze_surface_topics.py
-
-/notebooks/
-    exploratory_analysis.ipynb
-    manual_review.ipynb
-
+/src
+    scraping
+    preprocessing
+    topic_modeling
+    clustering
+    visualization
+/models
+    (local only, not uploaded due to size)
+/docs
+    (optional)
 README.md
-requirements.txt
 
 
-Large data artifacts and transformer models are intentionally excluded from GitHub due to size and licensing.
+The repository contains code only. Data and model files were not pushed because many exceed GitHub’s 100 MB limit.
 
-Running the Project
+Current Scope and Future Work
+Current Scope Completed
 
-To reproduce the pipeline:
+Data scraping
 
-Install dependencies from requirements.txt.
+Filtering
 
-Run scraper.py to collect reviews.
+Embedding generation
 
-Run clean_data.py and preprocess.py to filter and normalize.
+Topic modeling
 
-Run bertopic.py for topic modeling.
+Subtopic clustering
 
-Optionally run kmeans_subtopics.py for dense subtopics.
+Visualization
 
-Inspect outputs in /data/deep_analysis/.
+Human evaluation
 
-Perform qualitative review via notebooks if desired.
+Potential Future Extensions
 
-GPU acceleration is optional but recommended for embedding-heavy stages.
+Temporal trend analysis of complaints
 
-Limitations and Future Work
+Cross platform comparison (iOS vs Android)
 
-This project does not attempt to classify sentiment beyond isolating negative reviews, and it does not cross-reference reviews against dates, app versions, geography, or business experiments. Future work may incorporate temporal tracking, cross-platform comparison, causal inference, and survey triangulation.
+Geographic segmentation
 
-Another likely extension is using Retrieval Augmented Generation to summarize clusters and generate structured product requirements directly from user text.
+Automated pain point summarization
+
+Sentiment scoring per topic
+
+Integration into live dashboards
+
+These extensions would make the analysis useful for continuous CX monitoring across product teams, support, and operations.
