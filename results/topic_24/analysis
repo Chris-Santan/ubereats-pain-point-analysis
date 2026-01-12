@@ -1,0 +1,172 @@
+Gift Cards That Can’t Be Spent or Are Trapped Behind Friction
+
+1. Main failure modes and counts
+
+I read all 110 reviews and assigned each one a primary focus so the counts sum to 110.
+
+Legend:
+
+A = Gift card balance cannot be used at checkout / stuck credit
+
+B = Gift card redemption / loading errors (cannot add, “already used”, disappeared, etc.)
+
+C = Gift cards blocked by verification, ID, account bans, region/age, or “money account” requirements
+
+D = Partial payment limitations (must cover full cost, cannot split GC + card, forced to use full amount)
+
+E = Incorrect or suspicious charges related to gift cards (charged bank instead of GC, money missing, fraud flags, etc.)
+
+F = UX complexity / too many hoops / confusing or painful flow (but not clearly one of the above)
+
+G = Mainly “this is too expensive, only used because of a gift card”
+
+H = Gifting flow (sending or buying gift cards, recipient contact, gifting UX)
+
+Category counts
+
+A. Gift card credit is unusable / stuck:
+
+28 out of 110 reviews
+
+About 25 percent
+
+Patterns:
+
+“Have a gift card I can’t use”
+
+Balance shows in account but not as a payment option
+
+Order will not process when GC is selected
+
+GC only works for some services / not in user’s context
+
+C. Verification, bans, and eligibility blockers around gift cards:
+
+28 out of 110 reviews
+
+About 25 percent
+
+Patterns:
+
+Forced to upload driver’s license and selfie to use a GC
+
+Accounts suspended or banned right after loading a GC
+
+Under 18 / family account restrictions making GC balance unusable
+
+Need “Uber Money account” or extra payment method to unlock GC usage
+
+Country / currency ineligibility (for example USD card but user in CHF region)
+
+B. Gift card redemption / loading failures:
+
+15 out of 110 reviews
+
+About 14 percent
+
+Patterns:
+
+Cannot redeem or add gift card number
+
+App saying brand new GC is “already redeemed”
+
+Scratched code situation where support gives code that is then “already used”
+
+App not accepting gift card online or on website; sometimes forced into app
+
+GC option/menu missing entirely
+
+F. UX complexity / painful process / too many hoops:
+
+14 out of 110 reviews
+
+About 13 percent
+
+Patterns:
+
+“Took an hour to use a gift card”
+
+Forced to install/uninstall app multiple times just to see GC option
+
+“Most traumatic experience” or “absolute joke” onboarding just to redeem
+
+Generally able to eventually use the card, but the flow feels hostile and exhausting
+
+E. Wrong charges, missing value, or suspicious charge behaviour:
+
+11 out of 110 reviews
+
+About 10 percent
+
+Patterns:
+
+GC charged but order not placed
+
+Bank charged instead of GC, or both charged
+
+Value partially missing after load (“doesn’t load full amount”, money disappeared)
+
+Fraud-like charges reported when scanning a GC
+
+Gift balance taken after cancellation and not restored
+
+D. No proper split between gift card and other payment methods:
+
+5 out of 110 reviews
+
+About 5 percent
+
+Patterns:
+
+Must match order total exactly with GC or order will not go through
+
+Cannot use GC for part of the bill and card for the rest
+
+Forced to drain the whole GC and then pay extra on card
+
+GC only works if it covers the full cost
+
+G. High costs where gift card is just the reason to use the app:
+
+5 out of 110 reviews
+
+About 5 percent
+
+Patterns:
+
+“Only used because I had a gift card”
+
+Complaints about astronomical fees and prices, with GC as the only justification to try the service
+
+H. Gifting flow issues (sending / purchasing giftcards):
+
+4 out of 110 reviews
+
+About 4 percent
+
+Patterns:
+
+Gift not delivered or recipient not contacted
+
+Buying digital gift cards failing
+
+Complaints that the gifter is contacted instead of the recipient
+
+Desire to see the gift code beforehand or schedule properly
+
+2. High level narrative for this subtopic
+
+If you want a single “executive summary” sentence:
+
+Users repeatedly describe gift cards that are either impossible to spend or locked behind heavy verification and technical friction, with many reporting unusable balances, failed redemptions, or account restrictions that leave real money trapped inside the app.
+
+If you want a slightly longer explanation with structure:
+
+Roughly half of the reviews (A + C ≈ 50 percent) say some version of
+“I have a gift card balance, but the app will not let me use it because of either technical failure or gating requirements like ID checks, bans, or eligibility rules.”
+
+About a quarter (B + F ≈ 27 percent) focus on how confusing, fragile, or broken the redemption and usage flow is, even when it eventually works.
+
+Around 10 percent explicitly describe money seeming to vanish, double charges, or unclear allocation of payment between gift card and card, which reads to users like theft or fraud.
+
+Smaller but still meaningful fractions point to inability to split payments, poor gifting UX, and high fees that only feel tolerable because someone else prepaid with a gift card.
