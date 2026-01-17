@@ -181,7 +181,9 @@ The following reports detail the findings from each selected subtopic.
    - Cannot see where to enter code
    - Confusing visual design for promo tags
 
-**Monthly Trend Visualization:** `visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png`
+**Monthly Trend Visualization:**
+
+![Topic 2 Monthly Trend](visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png)
 
 This visualization shows how the parent topic (Topic 2: Promo, Promotion and Promos Related Issues) has evolved over time, tracking all 1,389 reviews in the topic. This reveals patterns in when users experience the most issues with promotions overall.
 
@@ -234,7 +236,9 @@ This visualization shows how the parent topic (Topic 2: Promo, Promotion and Pro
    - Discounts do not reduce total
    - App makes orders far more expensive than food value
 
-**Monthly Trend Visualization:** `visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png`
+**Monthly Trend Visualization:**
+
+![Topic 7 Monthly Trend](visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png)
 
 This visualization tracks the parent topic (Topic 7: Tip, Tips and Tipping Related Issues) over time, showing all 326 reviews in the topic. This reveals patterns in when users experience the most issues with tipping overall.
 
@@ -298,7 +302,9 @@ This visualization tracks the parent topic (Topic 7: Tip, Tips and Tipping Relat
 
 **Executive Summary:** Roughly half of the reviews (50%) say some version of "I have a gift card balance, but the app will not let me use it because of either technical failure or gating requirements like ID checks, bans, or eligibility rules." About a quarter (27%) focus on how confusing, fragile, or broken the redemption and usage flow is. Around 10% explicitly describe money seeming to vanish, double charges, or unclear allocation of payment.
 
-**Monthly Trend Visualization:** `visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png`
+**Monthly Trend Visualization:**
+
+![Topic 24 Monthly Trend](visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png)
 
 This visualization shows how the parent topic (Topic 24: Gift, Gift Card and Card Related Issues) has changed over time, tracking all 115 reviews in the topic. This reveals patterns in when users experience the most issues with gift cards overall.
 
@@ -310,17 +316,33 @@ The project generates several types of visual outputs:
 
 ### Topic-Level Visualizations
 
-- **Prevalence by Pain Point** (`visuals/prevalence_by_pain_point.png`): Bar chart showing the frequency of each major pain point category
-- **Top 15 Prevalence by Pain Point** (`visuals/prevalence_top15_by_pain_point.png`): Focused view on the top 15 most common complaint categories
-- **Monthly Trends by Pain Point** (`visuals/monthly_trends_by_pain_point.png`): Temporal analysis showing how different pain points have evolved over time
+**Prevalence by Pain Point**: Bar chart showing the frequency of each major pain point category
+
+![Prevalence by Pain Point](visuals/prevalence_by_pain_point.png)
+
+**Top 15 Prevalence by Pain Point**: Focused view on the top 15 most common complaint categories
+
+![Top 15 Prevalence by Pain Point](visuals/prevalence_top15_by_pain_point.png)
+
+**Monthly Trends by Pain Point**: Temporal analysis showing how different pain points have evolved over time
+
+![Monthly Trends by Pain Point](visuals/monthly_trends_by_pain_point.png)
 
 ### Deep Analysis Visualizations
 
 Monthly trend visualizations for each of the three parent topics selected for deep analysis:
 
-- **Topic 2 - Promotions** (1,389 reviews): `visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png`
-- **Topic 7 - Tipping** (326 reviews): `visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png`
-- **Topic 24 - Gift Cards** (115 reviews): `visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png`
+**Topic 2 - Promotions** (1,389 reviews):
+
+![Topic 2 Monthly Trend](visuals/deep_analysis/topic_2_monthly_trend_promo__promotion_and_promos_related_issues.png)
+
+**Topic 7 - Tipping** (326 reviews):
+
+![Topic 7 Monthly Trend](visuals/deep_analysis/topic_7_monthly_trend_tip__tips_and_tipping_related_issues.png)
+
+**Topic 24 - Gift Cards** (115 reviews):
+
+![Topic 24 Monthly Trend](visuals/deep_analysis/topic_24_monthly_trend_gift__gift_card_and_card_related_issues.png)
 
 These visualizations show how each parent topic's prevalence has changed over time, tracking all reviews within each topic (not just the selected subtopics). This allows identification of:
 - Seasonal patterns in complaints
